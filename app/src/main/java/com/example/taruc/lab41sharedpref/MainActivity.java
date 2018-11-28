@@ -14,9 +14,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView imageViewProfile;
+    private TextView textViewName;
     private static final String PREF_NAME = "com.example.taruc.lab41sharedpref";
     private SharedPreferences sharedPreferences;
 
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         imageViewProfile = findViewById(R.id.imageViewProfile);
-        sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        textViewName = findViewById(R.id.textViewName);
     }
 
     @Override
@@ -39,8 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        int gender;
-        gender = sharedPreferences.getInt(getString(R.string.gender), -1);
+        sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        int gender = sharedPreferences.getInt(getString(R.string.gender), -1);
+        String name = sharedPreferences.getString(getString(R.string.user_name), getString(R.string.no_name));
+        textViewName.setText(name);
         if(gender == 1) {
             imageViewProfile.setImageResource(R.drawable.male);
         } else if(gender == 0) {
